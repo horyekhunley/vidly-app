@@ -1,5 +1,7 @@
 const { User, validate } = require('../models/user_model')
 const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 const express = require('express')
 const router = express.Router()
 const _ = require('lodash')
@@ -15,13 +17,18 @@ router.post('/register', async(req, res) => {
   //hash the incoming password
   const hashedPassword = await bcrypt.hash(req.body.password, 10)
   
+  // populate the db with user details
   user = await new User({
     ...req.body,
     password: hashedPassword
   })
+  // then save the user to db
   await user.save()
 
-  res.send( _.pick(user, ['_id', 'name', 'email']))
+  const token = user.generateAuthToken()
+
+  //send the id, name and email back to the frontend client
+  res.header('x-auth-token', token).send( _.pick(user, ['_id', 'name', 'email']))
 
 })
 

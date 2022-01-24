@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 const users = require('./models/user_model')
 const userRegistration = require('./routes/user_registration')
+const genreRoute = require('./routes/genre_route')
 const userLogin = require('./routes/user_login')
 
 const app = express()
@@ -23,6 +24,7 @@ mongoose.connect(process.env.MONGOOSE_URI, {
 
 app.use('/api/users/', userRegistration)
 app.use('/api/users/', userLogin)
+app.use('/api/genre/', genreRoute)
 
 
 const port = process.env.PORT || 3000

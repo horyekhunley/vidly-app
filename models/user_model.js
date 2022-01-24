@@ -1,6 +1,8 @@
 const Joi = require("joi");
 const mongoose = require("mongoose")
 const passwordComplexity = require('joi-password-complexity')
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 const userSchema = new mongoose.Schema({
 	name: {
@@ -23,6 +25,11 @@ const userSchema = new mongoose.Schema({
 		maxlength: 1025,
 	},
 });
+
+userSchema.methods.generateAuthToken = function(){
+  const token = jwt.sign({ _id: this._id}, process.env.JWT_SECRET)
+  return token
+}
 
 const validate = (user) => {
 	const schema = Joi.object({
