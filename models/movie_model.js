@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
-const { genreSchema } = require("../models/genre_model");
+const { Genre } = require("../models/genre_model");
 
 const movieSchema = new mongoose.Schema({
 	title: {
@@ -8,10 +8,10 @@ const movieSchema = new mongoose.Schema({
 		required: true,
 		trim: true,
 		minlength: 5,
-		maxlength: 255,
+		maxlength: 255
 	},
 	genre: {
-		type: genreSchema,
+		type: mongoose.Types.ObjectId,
 	},
 	numberInStock: {
 		type: Number,
