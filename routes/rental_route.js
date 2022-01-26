@@ -1,12 +1,9 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const Fawn = require("fawn");
-const { Rental, validate, Rental } = require("../models/rental_model");
+require('dotenv').config()
+const { Rental, validate } = require("../models/rental_model");
 const { Movie } = require("../models/movie_model");
 const { Customer } = require("../models/customer_model");
 const router = express.Router();
-
-Fawn.init(mongoose);
 
 //get all rentals sorting by title
 router.get("/", async (req, res) => {
@@ -41,22 +38,10 @@ router.post("/", async (req, res) => {
 		},
 	});
 
-	try {
-		new Fawn.Task()
-			.save("rentals", rental)
-			.update(
-				"movies",
-				{ _id: movie._id },
-				{
-					$inc: { numberInStock: -1 },
-				}
-			)
-			.run();
+	movie.numberInStock--
+	movie.save()
 
-		res.send(rental);
-	} catch (ex) {
-		res.status(500).send("Something failed");
-	}
+	res.send(rental);	
 });
 
 router.put("/:id", async (req, res) => {

@@ -22,7 +22,6 @@
     "bcrypt": "^5.0.1",
     "dotenv": "^14.2.0",
     "express": "^4.17.2",
-    "fawn": "^2.1.5",
     "joi": "^17.5.0",
     "joi-objectid": "^4.0.2",
     "joi-password-complexity": "^5.1.0",
