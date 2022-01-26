@@ -1,12 +1,9 @@
 const { User } = require('../models/user_model')
-const mongoose = require('mongoose')
 const Joi = require('joi')
 const express = require('express')
 const passwordComplexity = require('joi-password-complexity')
-const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const router = express.Router()
-const _ = require('lodash')
 const bcrypt = require('bcrypt')
 
 router.post('/login', async(req, res) => {

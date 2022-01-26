@@ -1,4 +1,5 @@
 const express = require("express");
+const auth = require("../middleware/auth");
 require('dotenv').config()
 const { Rental, validate } = require("../models/rental_model");
 const { Movie } = require("../models/movie_model");
@@ -11,7 +12,7 @@ router.get("/", async (req, res) => {
 	res.send(rentals);
 });
 // create a new movie rental
-router.post("/", async (req, res) => {
+router.post("/",auth,  async (req, res) => {
 	//first validate request
 	const { error } = validate(req.body);
 	if (error) return res.status(400).send(error.details[0].message);
@@ -44,7 +45,7 @@ router.post("/", async (req, res) => {
 	res.send(rental);	
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
 	//first validate request
 	const { error } = validate(req.body);
 	if (error) return res.status(400).send(error.details[0].message);
@@ -60,7 +61,7 @@ router.put("/:id", async (req, res) => {
 
 	res.send(movie);
 });
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
 	//first validate request
 	const { error } = validate(req.body);
 	if (error) return res.status(400).send(error.details[0].message);
@@ -72,7 +73,7 @@ router.delete("/:id", async (req, res) => {
 
 	res.send(movie);
 });
-router.get("/:id", async (req, res) => {
+router.get("/:id", auth, async(req, res) => {
 	//first validate request
 	const { error } = validate(req.body);
 	if (error) return res.status(400).send(error.details[0].message);

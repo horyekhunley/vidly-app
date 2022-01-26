@@ -1,6 +1,4 @@
 const { User, validate } = require('../models/user_model')
-const mongoose = require('mongoose')
-const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const express = require('express')
 const router = express.Router()
@@ -27,7 +25,7 @@ router.post('/register', async(req, res) => {
 
   const token = user.generateAuthToken()
 
-  //send the id, name and email back to the frontend client
+  //send the id, name and email back as a response header client
   res.header('x-auth-token', token).send( _.pick(user, ['_id', 'name', 'email']))
 
 })
