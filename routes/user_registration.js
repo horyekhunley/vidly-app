@@ -1,9 +1,15 @@
 const { User, validate } = require('../models/user_model')
 require('dotenv').config()
 const express = require('express')
+const auth = require('../middleware/auth')
 const router = express.Router()
 const _ = require('lodash')
 const bcrypt = require('bcrypt')
+
+router.get('/me', auth, async(req, res) => {
+  const user = User.findById(req.user._id)
+  res.send(user)
+})
 
 router.post('/register', async(req, res) => {
   const { error } = validate(req.body)
